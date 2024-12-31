@@ -254,11 +254,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const dashboardButton = document.getElementById('dashboard-button');
     const backToHomeButton = document.getElementById('back-to-home');
     const pivotTable = document.getElementById('pivot-table');
+    const monthFilter = document.getElementById('month-filter');
+    const yearFilter = document.getElementById('year-filter');
+    const filterButton = document.getElementById('filter-logs');
 
     if (dashboardButton) {
         dashboardButton.addEventListener('click', () => {
@@ -272,9 +274,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const renderPivotTable = (logs) => {
-        const processes = [...new Set(logs.map(log => log.process))];
-        const dates = [...new Set(logs.map(log => log.date))];
+    const renderPivotTable = (logs, filteredLogs) => {
+        const processes = [...new Set(filteredLogs.map(log => log.process))];
+        const dates = [...new Set(filteredLogs.map(log => log.date))];
 
         // Clear the existing table
         const tableHeader = pivotTable.querySelector('thead tr');
@@ -289,15 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
             tableHeader.appendChild(th);
         });
 
-        // Add "Total" header for column total
+        // Add "Total" header
         const totalHeader = document.createElement('th');
         totalHeader.textContent = "Total";
         tableHeader.appendChild(totalHeader);
 
-        // Initialize an object to store the total time spent on each process
-        let processTotals = {};
-
-        // Populate table body for each date
+        // Populate table body
         dates.forEach(date => {
             const row = document.createElement('tr');
             const dateCell = document.createElement('td');
@@ -308,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             processes.forEach(process => {
                 const cell = document.createElement('td');
-                const totalMinutes = logs
+                const totalMinutes = filteredLogs
                     .filter(log => log.date === date && log.process === process)
                     .reduce((sum, log) => {
                         const [hours, minutes] = log.totalTime.split(':').map(Number);
@@ -316,12 +315,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 0);
 
                 totalMinutesForDate += totalMinutes;
-
-                // Update the process total
-                if (!processTotals[process]) {
-                    processTotals[process] = 0;
-                }
-                processTotals[process] += totalMinutes;
 
                 const hours = Math.floor(totalMinutes / 60);
                 const minutes = totalMinutes % 60;
@@ -339,38 +332,86 @@ document.addEventListener('DOMContentLoaded', () => {
             tableBody.appendChild(row);
         });
 
-        // Add the total row for each process
-        const totalRow = document.createElement('tr');
-        const totalLabelCell = document.createElement('td');
-        totalLabelCell.textContent = "Total"; // Label for total row
-        totalRow.appendChild(totalLabelCell);
-
-        let grandTotalMinutes = 0;
+        // Add total for each process (row-wise)
+        const footerRow = document.createElement('tr');
+        const footerCell = document.createElement('td');
+        footerCell.textContent = 'Total';
+        footerRow.appendChild(footerCell);
 
         processes.forEach(process => {
-            const totalMinutesForProcess = processTotals[process] || 0;
-            const totalHours = Math.floor(totalMinutesForProcess / 60);
-            const totalMinutes = totalMinutesForProcess % 60;
-            const cell = document.createElement('td');
-            cell.textContent = `${totalHours}:${totalMinutes.toString().padStart(2, '0')}`;
-            totalRow.appendChild(cell);
+            const totalForProcess = filteredLogs
+                .filter(log => log.process === process)
+                .reduce((sum, log) => {
+                    const [hours, minutes] = log.totalTime.split(':').map(Number);
+                    return sum + hours * 60 + minutes;
+                }, 0);
 
-            grandTotalMinutes += totalMinutesForProcess;
+            const totalHoursForProcess = Math.floor(totalForProcess / 60);
+            const totalMinutesForProcess = totalForProcess % 60;
+            const processCell = document.createElement('td');
+            processCell.textContent = `${totalHoursForProcess}:${totalMinutesForProcess.toString().padStart(2, '0')}`;
+            footerRow.appendChild(processCell);
         });
 
-        // Add the grand total cell for the row
+        // Add the grand total
         const grandTotalCell = document.createElement('td');
-        const grandTotalHours = Math.floor(grandTotalMinutes / 60);
-        const grandTotalRemainingMinutes = grandTotalMinutes % 60;
-        grandTotalCell.textContent = `${grandTotalHours}:${grandTotalRemainingMinutes.toString().padStart(2, '0')}`;
-        totalRow.appendChild(grandTotalCell);
+        const grandTotal = filteredLogs.reduce((sum, log) => {
+            const [hours, minutes] = log.totalTime.split(':').map(Number);
+            return sum + hours * 60 + minutes;
+        }, 0);
 
-        // Append the total row at the end of the table
-        tableBody.appendChild(totalRow);
+        const grandTotalHours = Math.floor(grandTotal / 60);
+        const grandTotalMinutes = grandTotal % 60;
+        grandTotalCell.textContent = `${grandTotalHours}:${grandTotalMinutes.toString().padStart(2, '0')}`;
+        footerRow.appendChild(grandTotalCell);
+
+        tableBody.appendChild(footerRow);
     };
+
+    const applyFilter = () => {
+        const selectedMonth = monthFilter.value;
+        const selectedYear = yearFilter.value;
+
+        const logs = JSON.parse(localStorage.getItem('timeLogs')) || [];
+        
+        // Filter logs based on selected month and year
+        const filteredLogs = logs.filter(log => {
+            const logDate = new Date(log.date);
+            const logMonth = String(logDate.getMonth() + 1).padStart(2, '0');
+            const logYear = logDate.getFullYear();
+
+            return (
+                (!selectedMonth || logMonth === selectedMonth) &&
+                (!selectedYear || logYear.toString() === selectedYear) // Fix: Make sure year is a string for comparison
+            );
+        });
+
+        renderPivotTable(logs, filteredLogs);
+    };
+
+    const populateYearFilter = () => {
+        const logs = JSON.parse(localStorage.getItem('timeLogs')) || [];
+        const years = [...new Set(logs.map(log => new Date(log.date).getFullYear()))];
+
+        // Clear existing year options
+        yearFilter.innerHTML = '<option value="">Select Year</option>';
+
+        // Populate year filter with unique years
+        years.forEach(year => {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearFilter.appendChild(option);
+        });
+    };
+
+    filterButton.addEventListener('click', applyFilter);
+
+    // Populate year filter dynamically on page load
+    populateYearFilter();
 
     if (pivotTable) {
         const logs = JSON.parse(localStorage.getItem('timeLogs')) || [];
-        renderPivotTable(logs);
+        renderPivotTable(logs, logs); // Initially show all logs
     }
 });
