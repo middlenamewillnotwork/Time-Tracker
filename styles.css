@@ -211,5 +211,5 @@ textarea {
 /* Style the total row to make it stand out */
 #pivot-table tr:last-child {
     font-weight: bold;
-    background-color: #f5f5f5; /* Light grey background */
+    background-color: #8dcbf0; /* Light grey background */
 }
