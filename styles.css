@@ -213,3 +213,53 @@ textarea {
     font-weight: bold;
     background-color: #8dcbf0; /* Light grey background */
 }
+
+
+/* Style the filter container */
+#filter-container {
+    display: flex;
+    align-items: center;  /* Align dropdowns and button properly */
+    justify-content: center; /* Center the elements horizontally */
+    gap: 15px;  /* Space between elements */
+    margin: 20px 0;
+}
+
+/* Style the select elements */
+#month-filter, #year-filter {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+    height: 40px; /* Ensure all elements are of the same height */
+}
+
+/* Add a focus effect for the select elements */
+#month-filter:focus, #year-filter:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Style the button */
+#filter-logs {
+    padding: 0px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 50px; /* Same height as the selects for alignment */
+}
+
+/* Button hover effect */
+#filter-logs:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: Add spacing to the top of the table */
+#pivot-table {
+    margin-top: 30px;
+}
