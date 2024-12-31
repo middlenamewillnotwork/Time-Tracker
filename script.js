@@ -289,12 +289,15 @@ document.addEventListener('DOMContentLoaded', () => {
             tableHeader.appendChild(th);
         });
 
-        // Add "Total" header
+        // Add "Total" header for column total
         const totalHeader = document.createElement('th');
         totalHeader.textContent = "Total";
         tableHeader.appendChild(totalHeader);
 
-        // Populate table body
+        // Initialize an object to store the total time spent on each process
+        let processTotals = {};
+
+        // Populate table body for each date
         dates.forEach(date => {
             const row = document.createElement('tr');
             const dateCell = document.createElement('td');
@@ -314,6 +317,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 totalMinutesForDate += totalMinutes;
 
+                // Update the process total
+                if (!processTotals[process]) {
+                    processTotals[process] = 0;
+                }
+                processTotals[process] += totalMinutes;
+
                 const hours = Math.floor(totalMinutes / 60);
                 const minutes = totalMinutes % 60;
                 cell.textContent = `${hours}:${minutes.toString().padStart(2, '0')}`;
@@ -329,6 +338,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tableBody.appendChild(row);
         });
+
+        // Add the total row for each process
+        const totalRow = document.createElement('tr');
+        const totalLabelCell = document.createElement('td');
+        totalLabelCell.textContent = "Total"; // Label for total row
+        totalRow.appendChild(totalLabelCell);
+
+        let grandTotalMinutes = 0;
+
+        processes.forEach(process => {
+            const totalMinutesForProcess = processTotals[process] || 0;
+            const totalHours = Math.floor(totalMinutesForProcess / 60);
+            const totalMinutes = totalMinutesForProcess % 60;
+            const cell = document.createElement('td');
+            cell.textContent = `${totalHours}:${totalMinutes.toString().padStart(2, '0')}`;
+            totalRow.appendChild(cell);
+
+            grandTotalMinutes += totalMinutesForProcess;
+        });
+
+        // Add the grand total cell for the row
+        const grandTotalCell = document.createElement('td');
+        const grandTotalHours = Math.floor(grandTotalMinutes / 60);
+        const grandTotalRemainingMinutes = grandTotalMinutes % 60;
+        grandTotalCell.textContent = `${grandTotalHours}:${grandTotalRemainingMinutes.toString().padStart(2, '0')}`;
+        totalRow.appendChild(grandTotalCell);
+
+        // Append the total row at the end of the table
+        tableBody.appendChild(totalRow);
     };
 
     if (pivotTable) {
