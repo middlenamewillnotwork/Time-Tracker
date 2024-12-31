@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div id="home-page" class="active">
+        <h1>Time Tracker - AMIT MUKHERJEE</h1>
+
+        <button id="add-time-button">Add Time</button>
+
+        <div id="filters">
+            <label for="filter-date">Filter by Date:</label>
+            <input type="date" id="filter-date">
+
+            <label for="filter-process">Filter by Process:</label>
+            <select id="filter-process">
+                <option value="">All</option>
+                <option value="Vistaar">Vistaar</option>
+                <option value="Annapurna">Annapurna</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+        <button id="download-button">Download</button>
+        <button id="dashboard-button">Dashboard</button>
+        <div id="actions-container"></div>
+        <table id="time-logs" border="1">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Process</th>
+                    <th>Date</th>
+                    <th>In Time</th>
+                    <th>Out Time</th>
+                    <th>Reason</th>
+                    <th>Total Time Spent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Time logs will appear here -->
+            </tbody>
+        </table>
+
+        <div id="grand-total">
+            <strong>Grand Total: 00:00</strong>
+        </div>
+
+    </div>
+
+    <div id="add-time-form">
+        <h2>Add Time Log</h2>
+        <form id="time-form">
+            <label for="process">Process:</label>
+            <select id="process" required>
+                <option value="Vistaar">Vistaar</option>
+                <option value="Annapurna">Annapurna</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+
+            <label for="in-time">In Time:</label>
+            <input type="time" id="in-time" required>
+
+            <label for="out-time">Out Time:</label>
+            <input type="time" id="out-time" required>
+
+            <label for="reason">Reason (Max 40 characters, no symbols):</label>
+            <textarea id="reason" maxlength="40" required></textarea>
+            <p id="reason-error" style="color: red; display: none;">Please enter a valid reason (no symbols allowed).</p>
+
+            <button type="submit">Save</button>
+        </form>
+        <button id="back-button">Back</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
