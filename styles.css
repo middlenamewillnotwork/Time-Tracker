@@ -233,6 +233,7 @@ textarea {
     background-color: #f9f9f9;
     transition: border-color 0.3s ease;
     height: 40px; /* Ensure all elements are of the same height */
+    width: auto;
 }
 
 /* Add a focus effect for the select elements */
@@ -244,19 +245,21 @@ textarea {
 /* Style the button */
 #filter-logs {
     padding: 0px 20px;
-    font-size: 16px;
+    font-size: 40px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
+    background-color: #007bff00;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
     height: 50px; /* Same height as the selects for alignment */
+    position: absolute;
 }
 
 /* Button hover effect */
 #filter-logs:hover {
-    background-color: #0056b3;
+    background-color: #0057b300;
+    font-size: 45px;
 }
 
 /* Optional: Add spacing to the top of the table */
