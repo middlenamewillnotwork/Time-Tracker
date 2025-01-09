@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear the existing table
         const tableHeader = pivotTable.querySelector('thead tr');
         const tableBody = pivotTable.querySelector('tbody');
-        tableHeader.innerHTML = '<th>Date</th>'; // Reset headers
+        tableHeader.innerHTML = '<th>Date</th><th>First Login</th><th>Last Logout</th>'; // Reset headers
         tableBody.innerHTML = ''; // Reset body
 
         // Add process headers
@@ -302,6 +302,30 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateCell = document.createElement('td');
             dateCell.textContent = date;
             row.appendChild(dateCell);
+
+            // Add First Login and Last Logout cells
+            const firstLoginCell = document.createElement('td');
+            const lastLogoutCell = document.createElement('td');
+
+            const logsForDate = filteredLogs.filter(log => log.date === date);
+            if (logsForDate.length > 0) {
+                const firstLogin = logsForDate.reduce((earliest, log) => {
+                    return log.inTime < earliest ? log.inTime : earliest;
+                }, logsForDate[0].inTime);
+
+                const lastLogout = logsForDate.reduce((latest, log) => {
+                    return log.outTime > latest ? log.outTime : latest;
+                }, logsForDate[0].outTime);
+
+                firstLoginCell.textContent = firstLogin || '-';
+                lastLogoutCell.textContent = lastLogout || '-';
+            } else {
+                firstLoginCell.textContent = '-';
+                lastLogoutCell.textContent = '-';
+            }
+
+            row.appendChild(firstLoginCell);
+            row.appendChild(lastLogoutCell);
 
             let totalMinutesForDate = 0;
 
@@ -336,6 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const footerRow = document.createElement('tr');
         const footerCell = document.createElement('td');
         footerCell.textContent = 'Total';
+
+        // Merge the "Total" cell with the next two cells (First Login and Last Logout)
+        footerCell.colSpan = 3;
         footerRow.appendChild(footerCell);
 
         processes.forEach(process => {
@@ -382,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             return (
                 (!selectedMonth || logMonth === selectedMonth) &&
-                (!selectedYear || logYear.toString() === selectedYear) // Fix: Make sure year is a string for comparison
+                (!selectedYear || logYear.toString() === selectedYear)
             );
         });
 
