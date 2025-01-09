@@ -266,3 +266,52 @@ textarea {
 #pivot-table {
     margin-top: 30px;
 }
+
+
+
+/* General table styling */
+#pivot-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table headers */
+#pivot-table th {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Style for the first 3 header columns (Login Details) */
+#pivot-table th:nth-child(1),
+#pivot-table th:nth-child(2),
+#pivot-table th:nth-child(3) {
+    background-color: lightgreen;  /* Light Green Color */
+}
+
+/* Style for the process columns */
+#pivot-table th:nth-child(n+4):nth-child(-n+5),
+#pivot-table th:nth-child(n+6) {
+    background-color: #8dcbf0;  /* Default background color */
+}
+
+/* Table body styling */
+#pivot-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Footer Row (Total) */
+#pivot-table tfoot td {
+    font-weight: bold;
+}
+
+/* Total column styling */
+#pivot-table td:last-child {
+    font-weight: bold;
+    background-color: #e1f7e1;  /* Light green background for total column */
+}
+
