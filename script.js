@@ -442,3 +442,54 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPivotTable(logs, logs); // Initially show all logs
     }
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingVideo = document.getElementById('loading-video');
+    
+    const showLoadingVideo = (callback, delay = 1000) => {
+        loadingOverlay.style.display = 'flex'; // Show the loading overlay
+        loadingVideo.play(); // Ensure the video starts playing
+        setTimeout(() => {
+            callback(); // Perform the callback action after the delay
+            loadingOverlay.style.display = 'none'; // Hide the overlay
+        }, delay); // Adjust the delay as needed
+    };
+
+    // Add loading video to Dashboard button
+    const dashboardButton = document.getElementById('dashboard-button');
+    if (dashboardButton) {
+        dashboardButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent immediate navigation
+            showLoadingVideo(() => {
+                window.location.href = 'dashboard.html';
+            });
+        });
+    }
+
+    // Add loading video to Download button
+    const downloadButton = document.getElementById('download-button');
+    if (downloadButton) {
+        downloadButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default behavior
+            showLoadingVideo(() => {
+                // Your existing download functionality
+                console.log("Download started!");
+            });
+        });
+    }
+
+    // Add loading video to Back to Home button
+    const backToHomeButton = document.getElementById('back-to-home');
+    if (backToHomeButton) {
+        backToHomeButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent immediate navigation
+            showLoadingVideo(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    }
+});
