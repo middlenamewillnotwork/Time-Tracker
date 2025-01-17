@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const outTime = document.getElementById('out-time').value;
         const reason = document.getElementById('reason').value;
 
-        const reasonRegex = /^[a-zA-Z0-9\s]*$/; // Only letters, numbers, and spaces
+        const reasonRegex = /^[,&.a-zA-Z0-9\s]*$/; // Only letters, numbers, and spaces
         if (!reasonRegex.test(reason)) {
             document.getElementById('reason-error').style.display = 'block';
             return;
