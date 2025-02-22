@@ -6,22 +6,13 @@
     <title>Time Tracker Dashboard</title>
     <link rel="icon" href="dashboard.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
     <h1>Dashboard</h1>
     <button id="back-to-home">Back to Home</button>
 
-    <div id="loading-overlay">
-        <video id="loading-video" autoplay muted loop>
-            <source src="dot_loading.webm" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    
-
-
     <div id="filter-container">
+        <label for="month-filter">Filter by Month:</label>
         <select id="month-filter">
             <option value="">Select Month</option>
             <option value="01">January</option>
@@ -37,31 +28,57 @@
             <option value="11">November</option>
             <option value="12">December</option>
         </select>
-        
+    
+        <label for="year-filter">Filter by Year:</label>
         <select id="year-filter">
             <option value="">Select Year</option>
             <!-- Year options will be dynamically populated -->
         </select>
-        <div id="button-container">
-        <button id="filter-logs">🔍</button>
-    </div>
-
+    
+        <label for="process-filter">Filter by Process:</label>
+        <select id="process-filter">
+            <option value="">All</option>
+            <option value="Vistaar">Vistaar</option>
+            <option value="Annapurna">Annapurna</option>
+            <option value="Others">Others</option>
+        </select>
+    
     </div>
     
 
-
     <div id="pivot-table-container">
-    <table id="pivot-table" border="1">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <!-- Processes will be dynamically populated here -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be dynamically populated here -->
-        </tbody>
-    </table> </div>
+        <table id="pivot-table" border="1">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>First Login</th>
+                    <th>Last Logout</th>
+                    <th>Total Time Spent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically populated here -->
+            </tbody>
+        </table> 
+    </div>
+
+    <!-- JavaScript files moved to the bottom to ensure all elements load first -->
+    <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+    <script src="js/dropboxService.js"></script>
+    <script src="js/dashboard.js"></script>
+    
+
+    <script>
+        // Fix: Redirect to home page when clicking back button
+        document.addEventListener("DOMContentLoaded", function() {
+            const backToHomeButton = document.getElementById("back-to-home");
+            if (backToHomeButton) {
+                backToHomeButton.addEventListener("click", function() {
+                    window.location.href = "index.html";
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>

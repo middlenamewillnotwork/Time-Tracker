@@ -1,4 +1,4 @@
-/* Global Styles */
+/* 🌐 Global Styles */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -7,6 +7,7 @@ body {
     color: #333;
 }
 
+/* 📌 Page Heading */
 h1 {
     text-align: center;
     font-size: 32px;
@@ -14,6 +15,7 @@ h1 {
     margin-top: 20px;
 }
 
+/* 🔘 General Button Styling */
 button {
     background-color: #4A90E2;
     color: #fff;
@@ -24,76 +26,51 @@ button {
     font-size: 16px;
     margin-top: 10px;
     transition: background-color 0.3s;
-    /* display: flex;
-    margin: 0 auto; */
 }
 
 button:hover {
     background-color: #357ABD;
 }
 
-#home-page, #add-time-form {
-    display: none;
-}
-
-#home-page.active, #add-time-form.active {
-    display: block;
-}
-
-/* Form Styles */
-#add-time-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-label {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 8px;
-    display: block;
-}
-
-input[type="text"], input[type="date"], input[type="time"], select, textarea {
-    width: 95%;
+/* 📌 Filters & Buttons in One Line */
+#filters-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;  /* Ensures responsiveness */
+    gap: 15px;
     padding: 10px;
     margin-bottom: 20px;
+}
+
+/* 📌 Style Inputs & Selects */
+#filters-container input,
+#filters-container select {
+    padding: 10px;
     border-radius: 6px;
     border: 1px solid #ddd;
     font-size: 16px;
+    background: #fff;
+    min-width: 140px;
 }
 
-textarea {
-    resize: none;
-}
-
-#filters {
-    margin-bottom: 20px;
+/* 📌 Buttons (Import, Export, Dashboard) */
+#actions-container {
     display: flex;
-    justify-content: space-between;
-    max-width: 600px;
-    margin: 20px auto;
+    justify-content: center;
+    gap: 15px;
 }
 
-#filters input, #filters select {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    width: 30%;
-}
-
+/* 📋 Time Logs Table */
 #time-logs {
-    width: 100%;
-    margin-top: 30px;
+    width: 95%;
+    margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #time-logs th, #time-logs td {
-    padding: 12px;
+    padding: 8px;
     text-align: center;
     border: 1px solid #ddd;
 }
@@ -103,238 +80,217 @@ textarea {
     color: #fff;
 }
 
+/* 📌 Grand Total Styling */
 #grand-total {
     margin-top: 10px;
     text-align: right;
     font-size: 18px;
     color: #4A90E2;
+    font-weight: bold;
+    padding-right: 5%;
 }
 
-/* Responsive Styles */
+/* 📌 Popup Styling */
+#add-time-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#add-time-form h2 {
+    text-align: center;
+    color: #4A90E2;
+}
+
+#time-form label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+#time-form input, #time-form select, #time-form textarea {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+#time-form button {
+    display: block;
+    margin: 10px auto;
+    margin-top: 15px;
+}
+
+/* ❌ Close Button for Popup */
+#back-button {
+    display: block;
+    margin: 10px auto;
+    background: #ff3b3b;
+}
+
+/* 📊 Dashboard Styling */
+#pivot-table-container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+#pivot-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#pivot-table th, #pivot-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+#pivot-table th {
+    background-color: #4A90E2;
+    color: white;
+}
+
+/* 📌 Filter Container in Dashboard */
+#filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#filter-container select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    min-width: 150px;
+}
+
+/* 📌 Back Button */
+#back-to-home {
+    display: block;
+    margin: 10px auto;
+}
+
+/* 📌 Mobile Responsive */
 @media screen and (max-width: 768px) {
-    #filters {
+    #filters-container {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 10px;
     }
 
-    #filters input, #filters select {
+    #actions-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #time-logs {
         width: 100%;
-        margin-bottom: 10px;
     }
 
     #add-time-form {
         width: 90%;
     }
 
-    #time-logs th, #time-logs td {
-        font-size: 14px;
-        padding: 8px;
+    #pivot-table-container {
+        width: 100%;
     }
 }
 
-
-#time-logs td {
-    padding: 12px;
-    text-align: center; /* Centers content horizontally */
-    vertical-align: middle; /* Centers content vertically */
-    position: relative; /* Ensure positioning of child elements inside the cell */
+/* 🔘 Add Time Popup (Hidden by Default) */
+#add-time-form {
+    display: none; /* Hidden initially */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    z-index: 1000;
 }
 
-.delete-button {
-    background-color: #e74c3c;
-    color: #fff;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    width: auto; /* Let the button size adjust to its content */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto; /* Ensures it is centered horizontally */
+/* 📌 Show the popup when active */
+#add-time-form.active {
+    display: block;
 }
 
-.delete-button:hover {
-    background-color: #c0392b;
+/* ❌ Back Button */
+#back-button {
+    display: block;
+    margin: 10px auto;
+    background: #ff3b3b;
 }
 
-
-.edit-button {
-    background-color: #bdc3c7;
-    color: #fff;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    margin-right: 5px;
-    width: auto; /* Adjust width to fit the content */
-}
-
-.edit-button:hover {
-    background-color: #0e575c;
-}
-
-
-
-/* Style to center the table and keep it near the top */
-#pivot-table-container {
-    display: flex;
-    flex-direction: column; /* Stack the elements vertically */
-    align-items: center;    /* Center the table horizontally */
-    margin-top: 20px;       /* Add some space below the back-to-home button */
-    width: 100%;            /* Full width */
-}
-
-/* Your existing pivot table styles */
-#pivot-table th, #pivot-table td {
-    padding: 10px;
-    text-align: center;
-}
-
-/* Optional: Add a border around the table to make it more visible */
-#pivot-table {
-    border: 2px solid #1d597c;
-    border-collapse: collapse;
-}
-
-
-#pivot-table th:last-child,
-#pivot-table td:last-child {
-    font-weight: bold;
-    color: #2d89ef; /* Highlight color */
-}
-
-/* Style the total row to make it stand out */
-#pivot-table tr:last-child {
-    font-weight: bold;
-    background-color: #8dcbf0; /* Light grey background */
-}
-
-
-/* Style the filter container */
-#filter-container {
-    display: flex;
-    align-items: center;  /* Align dropdowns and button properly */
-    justify-content: center; /* Center the elements horizontally */
-    gap: 15px;  /* Space between elements */
-    margin: 20px 0;
-}
-
-/* Style the select elements */
-#month-filter, #year-filter {
-    padding: 8px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
-    height: 40px; /* Ensure all elements are of the same height */
-    width: auto;
-}
-
-/* Add a focus effect for the select elements */
-#month-filter:focus, #year-filter:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
-/* Style the button */
-#filter-logs {
-    padding: 0px 20px;
-    font-size: 40px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff00;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    height: 50px; /* Same height as the selects for alignment */
-    position: absolute;
-}
-
-/* Button hover effect */
-#filter-logs:hover {
-    background-color: #0057b300;
-    font-size: 45px;
-}
-
-/* Optional: Add spacing to the top of the table */
-#pivot-table {
-    margin-top: 30px;
-}
-
-
-
-/* General table styling */
-#pivot-table {
-    width: 90%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-/* Table headers */
-#pivot-table th {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Style for the first 3 header columns (Login Details) */
-#pivot-table th:nth-child(1),
-#pivot-table th:nth-child(2),
-#pivot-table th:nth-child(3) {
-    background-color: lightgreen;  /* Light Green Color */
-}
-
-/* Style for the process columns */
-#pivot-table th:nth-child(n+4):nth-child(-n+5),
-#pivot-table th:nth-child(n+6) {
-    background-color: #8dcbf0;  /* Default background color */
-}
-
-/* Table body styling */
-#pivot-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-/* Footer Row (Total) */
-#pivot-table tfoot td {
-    font-weight: bold;
-}
-
-/* Total column styling */
-#pivot-table td:last-child {
-    font-weight: bold;
-    background-color: #e1f7e1;  /* Light green background for total column */
-}
-
-
-
-
-
-#loading-overlay {
+/* 📌 Overlay Background (to dim the background) */
+#popup-overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    display: none; /* Hidden by default */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
 
-#loading-video {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: cover;
+/* Show overlay when popup is active */
+#popup-overlay.active {
+    display: block;
+}
+
+
+/* ✏️ Edit Button */
+.edit-button {
+    background-color: #90EE90; /* Light Green */
+    color: #fff;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #008000; /* Deep Green */
+}
+
+/* ❌ Delete Button */
+.delete-button {
+    background-color: #FF7F7F; /* Light Red */
+    color: #fff;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #B22222; /* Deep Red */
+}
+
+
+a{
+    color: #4A90E2;
+    font-size: 27px;
+    font-weight: bold;
+    text-decoration: none;
 }

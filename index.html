@@ -7,18 +7,41 @@
     <link rel="icon" href="timesheetlogo.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 </head>
 <body>
     <div id="home-page" class="active">
-        <h1>Time Tracker - AMIT MUKHERJEE</h1>
+        <h1>Time Tracker - <a href="https://www.instagram.com/amit_mukherjee1/">AMIT MUKHERJEE</a> </h1>
 
         <button id="add-time-button">Add Time</button>
 
-        <div id="filters">
-            <label for="filter-date">Filter by Date:</label>
+        <div id="filters-container">
+            <label for="filter-date">Date:</label>
             <input type="date" id="filter-date">
-
-            <label for="filter-process">Filter by Process:</label>
+        
+            <label for="filter-month">Month:</label>
+            <select id="filter-month">
+                <option value="">Select Month</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        
+            <label for="filter-year">Year:</label>
+            <select id="filter-year">
+                <option value="">Select Year</option>
+            </select>
+        
+            <label for="filter-process">Process:</label>
             <select id="filter-process">
                 <option value="">All</option>
                 <option value="Vistaar">Vistaar</option>
@@ -26,26 +49,14 @@
                 <option value="Others">Others</option>
             </select>
         </div>
-        <button id="download-button">Download</button>
-
-        <div id="loading-overlay">
-            <video id="loading-video" autoplay muted loop>
-                <source src="Download_done.webm" type="video/webm">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-
-        <button id="dashboard-button">Dashboard</button>
-
-        <div id="loading-overlay">
-            <video id="loading-video" autoplay muted loop>
-                <source src="Loading.webm" type="video/webm">
-                Your browser does not support the video tag.
-            </video>
+        
+        <div id="actions-container">
+            <button id="import-button">📂 Import</button>
+            <button id="export-button">📥 Export</button>
+            <button id="dashboard-button">📊 Dashboard</button>
         </div>
         
 
-        <div id="actions-container"></div>
         <table id="time-logs" border="1">
             <thead>
                 <tr>
@@ -63,10 +74,6 @@
             </tbody>
         </table>
 
-        <div id="grand-total">
-            <strong>Grand Total: 00:00</strong>
-        </div>
-
     </div>
 
     <div id="add-time-form">
@@ -74,10 +81,12 @@
         <form id="time-form">
             <label for="process">Process:</label>
             <select id="process" required>
+                <option value="">Select Process</option> <!-- Default option added -->
                 <option value="Vistaar">Vistaar</option>
                 <option value="Annapurna">Annapurna</option>
                 <option value="Others">Others</option>
             </select>
+            
 
             <label for="date">Date:</label>
             <input type="date" id="date" required>
@@ -97,6 +106,21 @@
         <button id="back-button">Back</button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- JavaScript files moved to the bottom for correct loading -->
+<!-- JavaScript files specific to index.html -->
+<script src="js/dropboxService.js"></script>
+<script src="js/addTime.js"></script>
+<script src="js/exportLogs.js"></script>
+<script src="js/importLogs.js"></script>
+<script src="js/filterSort.js"></script>
+<script src="js/editDeleteLogs.js"></script>
+
+<script>
+    // Fix: Redirect to dashboard page when clicking dashboard button
+    document.getElementById("dashboard-button").addEventListener("click", function() {
+        window.location.href = "dashboard.html";
+    });
+</script>
+
 </body>
 </html>
